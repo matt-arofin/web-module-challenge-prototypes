@@ -15,8 +15,24 @@
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+}
 
+Person.prototype.eat = function(str){
+  if(this.stomach.length <= 10){
+    this.stomach.push(str);
+  }
+}
+
+Person.prototype.poop = function(){
+  return this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`
 }
 
 
@@ -36,8 +52,20 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
 
+Car.prototype.fill = function(gallons){
+  return this.tank += gallons;
+}
+
+Car.prototype.drive = function(distance){
+  this.odometer += distance;
+  this.tank -= distance / this.milesPerGallon
 }
 
 
@@ -49,18 +77,37 @@ function Car() {
         + Should return a string "Playing with x", x being the favorite toy.
 */
 
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 }
 
+Baby.prototype = Object.create(Person.prototype);
+
+const newBaby = new Baby("Maggie", "8 months", "Rattle")
+console.log(newBaby);
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`}
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window binding - this is the default binding. Whenever a function is freely
+  invoked (ie, without dot notation) it looks to the global object for its context 
+  and returns the window object.
+
+  2. Implicit binding - this is when a function is called as a method using dot syntax.
+  Whatever is to the left of the function is considered as "this".
+ 
+  3. Explicit binding - this is when "this" is defined using the call(), apply(), or 
+  bind() functions. In this instance, "this" refers to the object passed as the first
+  parameter in the function, which is then initialised as an object of the constructor
+  to the left of the dot.
+
+  4. New keyword (Keyword binding) - when the "new" operator is used before invoking a
+  constructor function, the function's parameters will be used to create a new object instance
+  with its own "this" context.
 */
 
 ///////// END OF CHALLENGE /////////
